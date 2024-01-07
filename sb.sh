@@ -136,7 +136,7 @@ v6(){
 v4orv6(){
 if [ -z $(curl -s4m5 icanhazip.com -k) ]; then
 echo
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 yellow "检测到 纯IPV6 VPS，添加DNS64"
 echo -e "nameserver 2a00:1098:2b::1\nnameserver 2a00:1098:2c::1\nnameserver 2a01:4f8:c2c:123f::1" > /etc/resolv.conf
 endip=2606:4700:d0::a29f:c101
@@ -181,7 +181,7 @@ sleep 1
 green "执行开放端口，关闭防火墙完毕"
 }
 openyn(){
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 readp "是否开放端口，关闭防火墙？\n1、是，执行 (回车默认)\n2、否，我自已手动\n请选择：" action
 if [[ -z $action ]] || [[ "$action" = "1" ]]; then
 close
@@ -192,7 +192,7 @@ red "输入错误,请重新选择" && openyn
 fi
 }
 inssb(){
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 green "一、开始下载并安装Sing-box正式版内核……请稍等"
 echo
 sbcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
@@ -215,8 +215,8 @@ fi
 }
 inscertificate(){
 ymzs(){
-ym_vl_re=www.yahoo.com
-blue "Vless-reality的SNI域名默认为 www.yahoo.com"
+ym_vl_re=one-piece.com
+blue "Vless-reality的SNI域名默认为 one-piece.com"
 blue "Vmess-ws将开启TLS，Hysteria-2、Tuic-v5将使用 $(cat /root/ca.log 2>/dev/null) 证书，并开启SNI证书验证"
 tlsyn=true
 ym_vm_ws=$(cat /root/ca.log 2>/dev/null)
@@ -228,8 +228,8 @@ certificatec_tuic='/root/cert.crt'
 certificatep_tuic='/root/private.key'
 }
 zqzs(){
-ym_vl_re=www.yahoo.com
-blue "Vless-reality的SNI域名默认为 www.yahoo.com"
+ym_vl_re=one-piece.com
+blue "Vless-reality的SNI域名默认为 one-piece.com"
 blue "Vmess-ws将关闭TLS，Hysteria-2、Tuic-v5将使用bing自签证书，并关闭SNI证书验证"
 tlsyn=false
 ym_vm_ws=www.bing.com
@@ -240,7 +240,7 @@ certificatep_hy2='/etc/s-box/private.key'
 certificatec_tuic='/etc/s-box/cert.pem'
 certificatep_tuic='/etc/s-box/private.key'
 }
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 green "二、生成并设置相关证书"
 echo
 blue "自动生成bing自签证书中……" && sleep 2
@@ -254,7 +254,7 @@ red "生成bing自签证书失败" && exit
 fi
 echo
 if [[ -f /root/cert.crt && -f /root/private.key && -s /root/cert.crt && -s /root/private.key ]]; then
-yellow "经检测，之前已使用Acme-yg脚本申请过Acme域名证书：$(cat /root/ca.log) "
+yellow "经检测，之前已使用acme脚本申请过Acme域名证书：$(cat /root/ca.log) "
 green "是否使用 $(cat /root/ca.log) 域名证书？"
 yellow "1：否！使用自签的证书 (回车默认)"
 yellow "2：是！使用 $(cat /root/ca.log) 域名证书"
@@ -267,7 +267,7 @@ fi
 else
 green "如有解析完成的域名，是否申请一个Acme域名证书？（组成双证书模式，与自签证书可共存、各协议可独立切换）"
 yellow "1：否！使用自签的证书 (回车默认)"
-yellow "2：是！使用Acme-yg脚本申请Acme证书 (支持常规80端口模式与Dns API模式)"
+yellow "2：是！使用acme脚本申请Acme证书 (支持常规80端口模式与Dns API模式)"
 readp "请选择：" menu
 if [ -z "$menu" ] || [ "$menu" = "1" ] ; then
 zqzs
@@ -318,7 +318,7 @@ chooseport
 port_tu=$port
 }
 insport(){
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 green "三、设置各个协议端口"
 yellow "1：自动生成每个协议的随机端口 (2000-65535范围内)，回车默认"
 yellow "2：自定义每个协议端口"
@@ -357,7 +357,7 @@ blue "Vless-reality端口：$port_vl_re"
 blue "Vmess-ws端口：$port_vm_ws"
 blue "Hysteria-2端口：$port_hy2"
 blue "Tuic-v5端口：$port_tu"
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 green "四、自动生成各个协议统一的uuid (密码)"
 uuid=$(/etc/s-box/sing-box generate uuid)
 blue "已确认uuid (密码)：${uuid}"
@@ -726,8 +726,8 @@ fi
 }
 resvless(){
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-vl_link="vless://$uuid@$server_ip:$vl_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$vl_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#ygkkk-vl-reality"
+white ""
+vl_link="vless://$uuid@$server_ip:$vl_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$vl_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 echo "$vl_link" > /etc/s-box/vl_reality.txt
 red "🚀【 vless-reality-vision 】节点信息如下：" && sleep 2
 echo
@@ -736,52 +736,52 @@ echo -e "${yellow}$vl_link${plain}"
 echo
 echo "二维码【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vl_reality.txt)"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 }
 resvmess(){
 if [[ "$tls" = "false" ]]; then
 if [[ -n $(ps -ef | grep cloudflared) && -s '/etc/s-box/argo.log' ]]; then
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 vmess-ws(tls)+Argo 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo -e "${yellow}vmess://$(echo '{"add":"www.visa.com","aid":"0","host":"'$argo'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"443","ps":"ygkkk-vm-argo","tls":"tls","sni":"'$argo'","type":"none","v":"2"}' | base64 -w 0)${plain}"
+echo -e "${yellow}vmess://$(echo '{"add":"www.visa.com","aid":"0","host":"'$argo'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"443","ps":"vmess-argo","tls":"tls","sni":"'$argo'","type":"none","v":"2"}' | base64 -w 0)${plain}"
 echo
 echo "二维码【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo 'vmess://'$(echo '{"add":"www.visa.com","aid":"0","host":"'$argo'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"443","ps":"ygkkk-vm-argo","tls":"tls","sni":"'$argo'","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws_argo.txt
+echo 'vmess://'$(echo '{"add":"www.visa.com","aid":"0","host":"'$argo'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"443","ps":"vmess-argo","tls":"tls","sni":"'$argo'","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws_argo.txt
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vm_ws_argo.txt)"
 fi
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 vmess-ws 】节点信息如下 (建议设置为CDN优先节点)：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo -e "${yellow}vmess://$(echo '{"add":"'$server_ip'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"ygkkk-vm-ws","tls":"","type":"none","v":"2"}' | base64 -w 0)${plain}"
+echo -e "${yellow}vmess://$(echo '{"add":"'$server_ip'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws","tls":"","type":"none","v":"2"}' | base64 -w 0)${plain}"
 echo
 echo "二维码【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo 'vmess://'$(echo '{"add":"'$server_ip'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"ygkkk-vm-ws","tls":"","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws.txt
+echo 'vmess://'$(echo '{"add":"'$server_ip'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws","tls":"","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws.txt
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vm_ws.txt)"
 else
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 vmess-ws-tls 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo -e "${yellow}vmess://$(echo '{"add":"'$vm_name'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"ygkkk-vm-ws-tls","tls":"tls","sni":"'$vm_name'","type":"none","v":"2"}' | base64 -w 0)${plain}"
+echo -e "${yellow}vmess://$(echo '{"add":"'$vm_name'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws-tls","tls":"tls","sni":"'$vm_name'","type":"none","v":"2"}' | base64 -w 0)${plain}"
 echo
 echo "二维码【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
-echo 'vmess://'$(echo '{"add":"'$vm_name'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"ygkkk-vm-ws-tls","tls":"tls","sni":"'$vm_name'","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws_tls.txt
+echo 'vmess://'$(echo '{"add":"'$vm_name'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws-tls","tls":"tls","sni":"'$vm_name'","type":"none","v":"2"}' | base64 -w 0) > /etc/s-box/vm_ws_tls.txt
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vm_ws_tls.txt)"
 fi
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 }
 reshy2(){
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-hy2_link="hysteria2://$uuid@$sb_hy2_ip:$hy2_port?insecure=$ins_hy2&mport=$hyps&sni=$hy2_name#ygkkk-hy2"
+white ""
+hy2_link="hysteria2://$uuid@$sb_hy2_ip:$hy2_port?insecure=$ins_hy2&mport=$hyps&sni=$hy2_name#hy2"
 echo "$hy2_link" > /etc/s-box/hy2.txt
 red "🚀【 Hysteria-2 】节点信息如下：" && sleep 2
 echo
@@ -790,13 +790,13 @@ echo -e "${yellow}$hy2_link${plain}"
 echo
 echo "二维码【nekobox、小火箭shadowrocket】"
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/hy2.txt)"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 }
 restu5(){
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-tuic5_link="tuic://$uuid:$uuid@$sb_tu5_ip:$tu5_port?congestion_control=bbr&udp_relay_mode=native&alpn=h3&sni=$tu5_name&allow_insecure=$ins#ygkkk-tu5"
+white ""
+tuic5_link="tuic://$uuid:$uuid@$sb_tu5_ip:$tu5_port?congestion_control=bbr&udp_relay_mode=native&alpn=h3&sni=$tu5_name&allow_insecure=$ins#tuic"
 echo "$tuic5_link" > /etc/s-box/tuic5.txt
 red "🚀【 Tuic-v5 】节点信息如下：" && sleep 2
 echo
@@ -805,7 +805,7 @@ echo -e "${yellow}$tuic5_link${plain}"
 echo
 echo "二维码【nekobox、小火箭shadowrocket】"
 qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/tuic5.txt)"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 }
 sb_client(){
@@ -1561,7 +1561,7 @@ if [[ ! $vi =~ lxc|openvz ]]; then
 sysctl -w net.core.rmem_max=2500000 >/dev/null 2>&1
 sysctl -p >/dev/null 2>&1
 fi
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 green "五、针对vmess-ws协议，加入Cloudflared-Argo临时隧道功能"
 case $(uname -m) in
 aarch64) cpu=arm64;;
@@ -1580,12 +1580,12 @@ cfargo
 fi
 curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
 clear
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 lnsb && blue "Sing-box安装成功，脚本快捷方式为 sb" && cronsb
 sbshare
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 blue "Hysteria2与Tuic5的v2rayn配置文件、Clash-Meta、SFA/SFI/SFW客户端配置文件，请选择9进行查看"
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 echo
 }
 changeym(){
@@ -1609,8 +1609,8 @@ fi
 green "0：返回上层"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
-readp "请输入vless-reality域名 (回车使用www.yahoo.com)：" menu
-ym_vl_re=${menu:-www.yahoo.com}
+readp "请输入vless-reality域名 (回车使用one-piece.com)：" menu
+ym_vl_re=${menu:-one-piece.com}
 a=$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)
 b=$(jq -r '.inbounds[0].tls.reality.handshake.server' /etc/s-box/sb.json)
 c=$(cat /etc/s-box/vl_reality.txt | cut -d'=' -f5 | cut -d'&' -f1)
@@ -2394,52 +2394,52 @@ sbshare
 elif  [ "$menu" = "2" ]; then
 green "请稍等……"
 sbshare > /dev/null 2>&1
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 vless-reality、vmess-ws、Hysteria2、Tuic5 】Clash-Meta配置文件显示如下："
 red "支持Clash-Meta安卓客户端、Clash-Verge电脑客户端、软路由Openclash，支持Gitlab私有订阅链接在线配置更新"
 red "文件目录 /etc/s-box/clash_meta_client.yaml ，复制自建以yaml文件格式为准" && sleep 2
 echo
 cat /etc/s-box/clash_meta_client.yaml
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 vless-reality、vmess-ws、Hysteria2、Tuic5 】SFA/SFI/SFW配置文件显示如下："
 red "安卓SFA、苹果SFI（支持Gitlab私有订阅链接在线配置更新），win电脑官方文件包SFW请到甬哥Github项目自行下载，"
 red "文件目录 /etc/s-box/sing_box_client.json ，复制自建以json文件格式为准" && sleep 2
 echo
 cat /etc/s-box/sing_box_client.json
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 elif  [ "$menu" = "3" ]; then
 green "请稍等……"
 sbshare > /dev/null 2>&1
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 Hysteria-2 】v2rayn配置文件显示如下："
 red "请下载Hysteria2官方客户端核心，支持多端口跳跃、多端口复用"
 red "文件目录 /etc/s-box/v2rayn_hy2.yaml ，复制自建以yaml文件格式为准" && sleep 2
 echo
 cat /etc/s-box/v2rayn_hy2.yaml
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 tu5_sniname=$(jq -r '.inbounds[3].tls.key_path' /etc/s-box/sb.json)
 if [[ "$tu5_sniname" = '/etc/s-box/private.key' ]]; then
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 red "注意：V2rayN客户端使用Tuic5官方客户端核心时，不支持Tuic5自签证书，仅支持域名证书" && sleep 2
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 else
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 red "🚀【 Tuic-v5 】v2rayn配置文件显示如下："
 red "请下载Tuic5官方客户端核心，如已设置多端口，请自行修改，不支持多端口跳跃，支持多端口复用"
 red "文件目录 /etc/s-box/v2rayn_tu5.json ，复制自建以json文件格式为准" && sleep 2
 echo
 cat /etc/s-box/v2rayn_tu5.json
 echo
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white ""
 echo
 fi
 elif [ "$menu" = "4" ]; then
@@ -2452,14 +2452,14 @@ acme(){
 bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
 }
 cfwarp(){
-bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh))
 }
 bbr(){
 if [[ $vi =~ lxc|openvz ]]; then
 yellow "当前VPS的架构为 $vi，不支持开启原版BBR加速" && sleep 2 && exit 
 else
 green "点击任意键，即可开启BBR加速，ctrl+c退出"
-bash <(curl -Ls https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/xxf185/bbr/main/tcp.sh)
 fi
 }
 showprotocol(){
@@ -2513,38 +2513,26 @@ echo -e "未设置域名分流"
 fi
 }
 clear
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-echo -e "${bblue} ░██     ░██      ░██ ██ ██         ░█${plain}█   ░██     ░██   ░██     ░█${red}█   ░██${plain}  "
-echo -e "${bblue}  ░██   ░██      ░██    ░░██${plain}        ░██  ░██      ░██  ░██${red}      ░██  ░██${plain}   "
-echo -e "${bblue}   ░██ ░██      ░██ ${plain}                ░██ ██        ░██ █${red}█        ░██ ██  ${plain}   "
-echo -e "${bblue}     ░██        ░${plain}██    ░██ ██       ░██ ██        ░█${red}█ ██        ░██ ██  ${plain}  "
-echo -e "${bblue}     ░██ ${plain}        ░██    ░░██        ░██ ░██       ░${red}██ ░██       ░██ ░██ ${plain}  "
-echo -e "${bblue}     ░█${plain}█          ░██ ██ ██         ░██  ░░${red}██     ░██  ░░██     ░██  ░░██ ${plain}  "
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "甬哥Github项目  ：github.com/yonggekkk"
-white "甬哥Blogger博客 ：ygkkk.blogspot.com"
-white "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "Vless-reality-vision、Vmess-ws(tls)+Argo、Hysteria-2、Tuic-v5 一键四协议共存"
-white "Sing-box脚本快捷方式：sb"
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-green " 1. 安装 Sing-box" 
-green " 2. 卸载 Sing-box"
-white "----------------------------------------------------------------------------------"
+echo -e 
+echo -e "-----------------------------Sing-box四合一 脚本----------------------------- "
+echo -e ""
+echo -e "快捷方式：sb"
+red ""
+green " 1. 安装 sing-box" 
+green " 2. 卸载 sing-box"
 green " 3. 变更配置 (双证书、UUID、Argo域名、IP优先级、TG通知)" 
 green " 4. 更改端口、添加多端口跳跃复用" 
 green " 5. 三大通道自定义域名分流" 
 green " 6. 关闭、重启 Sing-box"   
-green " 7. 更新 Sing-box 脚本"
-green " 8. 更新、切换 Sing-box 双内核"
-white "----------------------------------------------------------------------------------"
+green " 7. 更新 脚本"
+green " 8. 更新 core"
 green " 9. 实时查询/TG通知：分享链接、二维码、Clash-Meta、官方SFA/SFI/SFW客户端配置"
 green "10. 查看 Sing-box 运行日志"
 green "11. 一键原版BBR+FQ加速"
 green "12. 管理 Acme 申请域名证书"
-green "13. 管理 Warp 查看Netflix、ChatGPT解锁情况"
+green "13. 管理 Warp "
 green " 0. 退出脚本"
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 insV=$(cat /etc/s-box/v 2>/dev/null)
 latestV=$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
 if [ -f /etc/s-box/v ]; then
@@ -2556,7 +2544,7 @@ echo -e "检测到最新 Sing-box 脚本版本号：${yellow}${latestV}${plain} 
 echo -e "${yellow}$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version)${plain}"
 fi
 else
-echo -e "当前 Sing-box 脚本版本号：${bblue}${latestV}${plain}"
+echo -e "当前 Sing-box 脚本版本：${bblue}${latestV}${plain}"
 echo -e "请先选择 1 ，安装 Sing-box 脚本"
 fi
 lapre
@@ -2564,36 +2552,28 @@ if [ -f '/etc/s-box/sb.json' ]; then
 if [[ $inscore =~ ^[0-9.]+$ ]]; then
 if [ "${inscore}" = "${latcore}" ]; then
 echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${inscore}${plain} (已安装)"
-echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
+echo -e "当前 Sing-box 版本：${bblue}${inscore}${plain}"
 else
 echo
-echo -e "当前 Sing-box 已安装正式版内核：${bblue}${inscore}${plain}"
-echo -e "检测到最新 Sing-box 正式版内核：${yellow}${latcore}${plain} (可选择8进行更新)"
+echo -e "当前 Sing-box版本：${bblue}${inscore}${plain}"
+echo -e "检测到最新 Sing-box 版本：${yellow}${latcore}${plain} "
 echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
 fi
 else
 if [ "${inscore}" = "${precore}" ]; then
 echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${inscore}${plain} (已安装)"
-echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
+echo -e "当前 Sing-box 最新版本：${bblue}${latcore}${plain} "
 else
 echo
-echo -e "当前 Sing-box 已安装测试版内核：${bblue}${inscore}${plain}"
-echo -e "检测到最新 Sing-box 测试版内核：${yellow}${precore}${plain} (可选择8进行更新)"
-echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
+echo -e "当前 Sing-box 最新版本：${bblue}${latcore}${plain} "
 fi
 fi
 else
 echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain}"
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain}"
+echo -e "当前 Sing-box 最新版本：${bblue}${latcore}${plain}"
+echo
 fi
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 echo -e "VPS状态如下："
 echo -e "系统:$blue$op$plain  \c";echo -e "内核:$blue$version$plain  \c";echo -e "处理器:$blue$cpu$plain  \c";echo -e "虚拟化:$blue$vi$plain  \c";echo -e "BBR算法:$blue$bbr$plain"
 v4v6
@@ -2636,11 +2616,11 @@ echo -e "Sing-box状态：$yellow未启动，可选择6重启，依旧如此选�
 else
 echo -e "Sing-box状态：$red未安装$plain"
 fi
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 if [ -f '/etc/s-box/sb.json' ]; then
 showprotocol
 fi
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red ""
 echo
 readp "请输入数字【0-13】:" Input
 case "$Input" in  
