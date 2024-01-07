@@ -729,7 +729,7 @@ echo
 white ""
 vl_link="vless://$uuid@$server_ip:$vl_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$vl_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 echo "$vl_link" > /etc/s-box/vl_reality.txt
-red "🚀【 vless-reality-vision 】节点信息如下：" && sleep 2
+red "【 vless-reality-vision 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
 echo -e "${yellow}$vl_link${plain}"
@@ -744,7 +744,7 @@ if [[ "$tls" = "false" ]]; then
 if [[ -n $(ps -ef | grep cloudflared) && -s '/etc/s-box/argo.log' ]]; then
 echo
 white ""
-red "🚀【 vmess-ws(tls)+Argo 】节点信息如下：" && sleep 2
+red "【 vmess-ws(tls)+Argo 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
 echo -e "${yellow}vmess://$(echo '{"add":"www.visa.com","aid":"0","host":"'$argo'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"443","ps":"vmess-argo","tls":"tls","sni":"'$argo'","type":"none","v":"2"}' | base64 -w 0)${plain}"
@@ -755,7 +755,7 @@ qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vm_ws_argo.txt)"
 fi
 echo
 white ""
-red "🚀【 vmess-ws 】节点信息如下 (建议设置为CDN优先节点)：" && sleep 2
+red "【 vmess-ws 】节点信息如下 (建议设置为CDN优先节点)：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
 echo -e "${yellow}vmess://$(echo '{"add":"'$server_ip'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws","tls":"","type":"none","v":"2"}' | base64 -w 0)${plain}"
@@ -766,7 +766,7 @@ qrencode -o - -t ANSIUTF8 "$(cat /etc/s-box/vm_ws.txt)"
 else
 echo
 white ""
-red "🚀【 vmess-ws-tls 】节点信息如下：" && sleep 2
+red "【 vmess-ws-tls 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【v2rayn、v2rayng、nekobox、小火箭shadowrocket】"
 echo -e "${yellow}vmess://$(echo '{"add":"'$vm_name'","aid":"0","host":"'$vm_name'","id":"'$uuid'","net":"ws","path":"'$ws_path'","port":"'$vm_port'","ps":"vmess-ws-tls","tls":"tls","sni":"'$vm_name'","type":"none","v":"2"}' | base64 -w 0)${plain}"
@@ -783,7 +783,7 @@ echo
 white ""
 hy2_link="hysteria2://$uuid@$sb_hy2_ip:$hy2_port?insecure=$ins_hy2&mport=$hyps&sni=$hy2_name#hy2"
 echo "$hy2_link" > /etc/s-box/hy2.txt
-red "🚀【 Hysteria-2 】节点信息如下：" && sleep 2
+red "【 Hysteria-2 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【nekobox、小火箭shadowrocket】"
 echo -e "${yellow}$hy2_link${plain}"
@@ -798,7 +798,7 @@ echo
 white ""
 tuic5_link="tuic://$uuid:$uuid@$sb_tu5_ip:$tu5_port?congestion_control=bbr&udp_relay_mode=native&alpn=h3&sni=$tu5_name&allow_insecure=$ins#tuic"
 echo "$tuic5_link" > /etc/s-box/tuic5.txt
-red "🚀【 Tuic-v5 】节点信息如下：" && sleep 2
+red "【 Tuic-v5 】节点信息如下：" && sleep 2
 echo
 echo "分享链接【nekobox、小火箭shadowrocket】"
 echo -e "${yellow}$tuic5_link${plain}"
@@ -1927,20 +1927,20 @@ message_text_m7=$(echo "$m7" | jq -c .)
 message_text_m8=$(echo "$m8")
 MODE=HTML
 URL="https://api.telegram.org/bottelegram_token/sendMessage"
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Vless-reality-vision 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m1}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Vless-reality-vision 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m1}")
 if [[ -f /etc/s-box/vm_ws.txt ]]; then
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Vmess-ws 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m2}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Vmess-ws 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m2}")
 fi
 if [[ -n $(ps -ef | grep cloudflared) && -s '/etc/s-box/argo.log' ]]; then
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Vmess-ws(tls)+Argo 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m3}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Vmess-ws(tls)+Argo 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m3}")
 fi
 if [[ -f /etc/s-box/vm_ws_tls.txt ]]; then
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Vmess-ws-tls 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m4}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Vmess-ws-tls 分享链接 】：支持v2rayng、nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m4}")
 fi
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Hysteria-2 分享链接 】：支持nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m5}")
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Tuic-v5 分享链接 】：支持nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m6}")
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Sing-box 配置文件 】：支持SFA、SFI、SFW "$'"'"'\n\n'"'"'"${message_text_m7}")
-res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=🚀【 Clash-meta 配置文件 】：支持CMFA、CMFW-V、CMFOC "$'"'"'\n\n'"'"'"${message_text_m8}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Hysteria-2 分享链接 】：支持nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m5}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Tuic-v5 分享链接 】：支持nekobox、小火箭shadowrocket "$'"'"'\n\n'"'"'"${message_text_m6}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Sing-box 配置文件 】：支持SFA、SFI、SFW "$'"'"'\n\n'"'"'"${message_text_m7}")
+res=$(timeout 20s curl -s -X POST $URL -d chat_id=telegram_id  -d parse_mode=${MODE} --data-urlencode "text=【 Clash-meta 配置文件 】：支持CMFA、CMFW-V、CMFOC "$'"'"'\n\n'"'"'"${message_text_m8}")
 if [ $? == 124 ];then
 echo TG_api请求超时,请检查网络是否重启完成并是否能够访问TG
 fi
@@ -2395,7 +2395,7 @@ elif  [ "$menu" = "2" ]; then
 green "请稍等……"
 sbshare > /dev/null 2>&1
 white ""
-red "🚀【 vless-reality、vmess-ws、Hysteria2、Tuic5 】Clash-Meta配置文件显示如下："
+red "【 vless-reality、vmess-ws、Hysteria2、Tuic5 】Clash-Meta配置文件显示如下："
 red "支持Clash-Meta安卓客户端、Clash-Verge电脑客户端、软路由Openclash，支持Gitlab私有订阅链接在线配置更新"
 red "文件目录 /etc/s-box/clash_meta_client.yaml ，复制自建以yaml文件格式为准" && sleep 2
 echo
@@ -2404,7 +2404,7 @@ echo
 white ""
 echo
 white ""
-red "🚀【 vless-reality、vmess-ws、Hysteria2、Tuic5 】SFA/SFI/SFW配置文件显示如下："
+red "【 vless-reality、vmess-ws、Hysteria2、Tuic5 】SFA/SFI/SFW配置文件显示如下："
 red "安卓SFA、苹果SFI（支持Gitlab私有订阅链接在线配置更新），win电脑官方文件包SFW请到甬哥Github项目自行下载，"
 red "文件目录 /etc/s-box/sing_box_client.json ，复制自建以json文件格式为准" && sleep 2
 echo
@@ -2416,7 +2416,7 @@ elif  [ "$menu" = "3" ]; then
 green "请稍等……"
 sbshare > /dev/null 2>&1
 white ""
-red "🚀【 Hysteria-2 】v2rayn配置文件显示如下："
+red "【 Hysteria-2 】v2rayn配置文件显示如下："
 red "请下载Hysteria2官方客户端核心，支持多端口跳跃、多端口复用"
 red "文件目录 /etc/s-box/v2rayn_hy2.yaml ，复制自建以yaml文件格式为准" && sleep 2
 echo
@@ -2433,7 +2433,7 @@ echo
 white ""
 else
 white ""
-red "🚀【 Tuic-v5 】v2rayn配置文件显示如下："
+red "【 Tuic-v5 】v2rayn配置文件显示如下："
 red "请下载Tuic5官方客户端核心，如已设置多端口，请自行修改，不支持多端口跳跃，支持多端口复用"
 red "文件目录 /etc/s-box/v2rayn_tu5.json ，复制自建以json文件格式为准" && sleep 2
 echo
@@ -2483,14 +2483,14 @@ hy2_sniname=$(jq -r '.inbounds[2].tls.key_path' /etc/s-box/sb.json)
 tu5_sniname=$(jq -r '.inbounds[3].tls.key_path' /etc/s-box/sb.json)
 [[ "$tu5_sniname" = '/etc/s-box/private.key' ]] && tu5_zs="自签证书" || tu5_zs="域名证书"
 echo -e "Sing-box节点关键信息、已分流域名情况如下："
-echo -e "🚀【 Vless-reality 】${yellow}端口:$vl_port  SNI域名证书:$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)${plain}"
+echo -e "【 Vless-reality 】${yellow}端口:$vl_port  SNI域名证书:$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)${plain}"
 if [[ "$tls" = "false" ]]; then
-echo -e "🚀【   Vmess-ws    】${yellow}端口:$vm_port   证书形式:$vm_zs   Argo状态:$argoym${plain}"
+echo -e "【   Vmess-ws    】${yellow}端口:$vm_port   证书形式:$vm_zs   Argo状态:$argoym${plain}"
 else
-echo -e "🚀【 Vmess-ws-tls  】${yellow}端口:$vm_port   证书形式:$vm_zs   Argo状态:$argoym${plain}"
+echo -e "【 Vmess-ws-tls  】${yellow}端口:$vm_port   证书形式:$vm_zs   Argo状态:$argoym${plain}"
 fi
-echo -e "🚀【  Hysteria-2   】${yellow}端口:$hy2_port  证书形式:$hy2_zs  转发多端口: $hy2zfport${plain}"
-echo -e "🚀【    Tuic-v5    】${yellow}端口:$tu5_port  证书形式:$tu5_zs  转发多端口: $tu5zfport${plain}"
+echo -e "【  Hysteria-2   】${yellow}端口:$hy2_port  证书形式:$hy2_zs  转发多端口: $hy2zfport${plain}"
+echo -e "【    Tuic-v5    】${yellow}端口:$tu5_port  证书形式:$tu5_zs  转发多端口: $tu5zfport${plain}"
 if [ "$argoym" = "已开启" ]; then
 echo -e "UUID(密码)：${yellow}$(jq -r '.inbounds[0].users[0].uuid' /etc/s-box/sb.json)${plain}"
 echo -e "Argo临时域名：${yellow}$(cat /etc/s-box/argo.log | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')${plain}"
@@ -2527,7 +2527,7 @@ green " 6. 关闭、重启 Sing-box"
 green " 7. 更新 脚本"
 green " 8. 更新 core"
 green " 9. 实时查询/TG通知：分享链接、二维码、Clash-Meta、官方SFA/SFI/SFW客户端配置"
-green "10. 查看 Sing-box 运行日志"
+green "10. 查看日志"
 green "11. 一键原版BBR+FQ加速"
 green "12. 管理 Acme 申请域名证书"
 green "13. 管理 Warp "
