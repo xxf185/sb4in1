@@ -2327,13 +2327,10 @@ upsbcroe(){
 sbactive
 lapre
 [[ $inscore =~ ^[0-9.]+$ ]] && lat="【已安装v$inscore】" || pre="【已安装v$inscore】"
-green "1：升级/切换Sing-box最新正式版 v$latcore  ${bblue}${lat}${plain}"
-green "2：升级/切换Sing-box最新测试版 v$precore  ${bblue}${pre}${plain}"
+green "1：升级Sing-box最新正式版 v$latcore  ${bblue}${lat}${plain}"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
 upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
-elif [ "$menu" = "2" ]; then
-upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
 else
 sb
 fi
