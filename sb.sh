@@ -57,7 +57,7 @@ bbr="Openvz/Lxc"
 fi
 hostname=$(hostname)
 if [ ! -f sbyg_update ]; then
-green "首次安装Sing-box-yg脚本必要的依赖……"
+green "首次安装Sing-box脚本必要的依赖……"
 update(){
 if [ -x "$(command -v apt-get)" ]; then
 apt update -y
@@ -2312,11 +2312,11 @@ chmod +x /usr/bin/sb
 }
 upsbyg(){
 if [[ ! -f '/usr/bin/sb' ]]; then
-red "未正常安装Sing-box-yg" && exit
+red "未正常安装Sing-box" && exit
 fi
 lnsb
 curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
-green "Sing-box-yg安装脚本升级成功" && sleep 5 && sb
+green "Sing-box安装脚本升级成功" && sleep 5 && sb
 }
 lapre(){
 latcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
@@ -2513,21 +2513,12 @@ echo -e "未设置域名分流"
 fi
 }
 clear
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-echo -e "${bblue} ░██     ░██      ░██ ██ ██         ░█${plain}█   ░██     ░██   ░██     ░█${red}█   ░██${plain}  "
-echo -e "${bblue}  ░██   ░██      ░██    ░░██${plain}        ░██  ░██      ░██  ░██${red}      ░██  ░██${plain}   "
-echo -e "${bblue}   ░██ ░██      ░██ ${plain}                ░██ ██        ░██ █${red}█        ░██ ██  ${plain}   "
-echo -e "${bblue}     ░██        ░${plain}██    ░██ ██       ░██ ██        ░█${red}█ ██        ░██ ██  ${plain}  "
-echo -e "${bblue}     ░██ ${plain}        ░██    ░░██        ░██ ░██       ░${red}██ ░██       ░██ ░██ ${plain}  "
-echo -e "${bblue}     ░█${plain}█          ░██ ██ ██         ░██  ░░${red}██     ░██  ░░██     ░██  ░░██ ${plain}  "
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "甬哥Github项目  ：github.com/yonggekkk"
-white "甬哥Blogger博客 ：ygkkk.blogspot.com"
-white "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "Vless-reality-vision、Vmess-ws(tls)+Argo、Hysteria-2、Tuic-v5 一键四协议共存"
-white "Sing-box-yg脚本快捷方式：sb"
-red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+white "" 
+echo -e "------------------------Sing-box四合一脚本------------------------"
+echo -e " "
+white ""
+white "Sing-box脚本快捷方式：sb"
+red ""
 green " 1. 安装 Sing-box" 
 green " 2. 卸载 Sing-box"
 white "----------------------------------------------------------------------------------"
@@ -2535,8 +2526,8 @@ green " 3. 变更配置 (双证书、UUID、Argo域名、IP优先级、TG通知)
 green " 4. 更改端口、添加多端口跳跃复用" 
 green " 5. 三大通道自定义域名分流" 
 green " 6. 关闭、重启 Sing-box"   
-green " 7. 更新 Sing-box-yg 脚本"
-green " 8. 更新、切换 Sing-box 双内核"
+green " 7. 更新脚本"
+green " 8. 更新Sing-box 内核"
 white "----------------------------------------------------------------------------------"
 green " 9. 实时查询/TG通知：分享链接、二维码、Clash-Meta、官方SFA/SFI/SFW客户端配置"
 green "10. 查看 Sing-box 运行日志"
@@ -2546,18 +2537,17 @@ green "13. 管理 Warp 查看Netflix、ChatGPT解锁情况"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 insV=$(cat /etc/s-box/v 2>/dev/null)
-latestV=$(curl -sL https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
+latestV=$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
 if [ -f /etc/s-box/v ]; then
 if [ "$insV" = "$latestV" ]; then
-echo -e "当前 Sing-box-yg 脚本最新版：${bblue}${insV}${plain} (已安装)"
+echo -e "当前 Sing-box 脚本最新版：${bblue}${insV}${plain} (已安装)"
 else
-echo -e "当前 Sing-box-yg 脚本版本号：${bblue}${insV}${plain}"
-echo -e "检测到最新 Sing-box-yg 脚本版本号：${yellow}${latestV}${plain} (可选择7进行更新)"
-echo -e "${yellow}$(curl -sL https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/version/version)${plain}"
+echo -e "当前 Sing-box 脚本版本号：${bblue}${insV}${plain}"
+echo -e "检测到最新 Sing-box 脚本版本号：${yellow}${latestV}${plain} (可选择7进行更新)"
 fi
 else
-echo -e "当前 Sing-box-yg 脚本版本号：${bblue}${latestV}${plain}"
-echo -e "请先选择 1 ，安装 Sing-box-yg 脚本"
+echo -e "当前 Sing-box 脚本版本号：${bblue}${latestV}${plain}"
+echo -e "请先选择 1 ，安装 Sing-box 脚本"
 fi
 lapre
 if [ -f '/etc/s-box/sb.json' ]; then
@@ -2565,33 +2555,25 @@ if [[ $inscore =~ ^[0-9.]+$ ]]; then
 if [ "${inscore}" = "${latcore}" ]; then
 echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${inscore}${plain} (已安装)"
-echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
 else
 echo
 echo -e "当前 Sing-box 已安装正式版内核：${bblue}${inscore}${plain}"
 echo -e "检测到最新 Sing-box 正式版内核：${yellow}${latcore}${plain} (可选择8进行更新)"
 echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
 fi
 else
 if [ "${inscore}" = "${precore}" ]; then
 echo
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${inscore}${plain} (已安装)"
-echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
 else
 echo
-echo -e "当前 Sing-box 已安装测试版内核：${bblue}${inscore}${plain}"
-echo -e "检测到最新 Sing-box 测试版内核：${yellow}${precore}${plain} (可选择8进行更新)"
-echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
+echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} "
 fi
 fi
 else
 echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain}"
-echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain}"
+echo -e ""
 fi
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo -e "VPS状态如下："
