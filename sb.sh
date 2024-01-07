@@ -2452,7 +2452,7 @@ acme(){
 bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
 }
 cfwarp(){
-bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh))
+bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh)
 }
 bbr(){
 if [[ $vi =~ lxc|openvz ]]; then
