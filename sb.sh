@@ -215,21 +215,21 @@ fi
 }
 inscertificate(){
 ymzs(){
-ym_vl_re=one-piece.com
-blue "Vless-reality的SNI域名默认为 one-piece.com"
-blue "Vmess-ws将开启TLS，Hysteria-2、Tuic-v5将使用 $(cat /root/ygkkkca/ca.log 2>/dev/null) 证书，并开启SNI证书验证"
+ym_vl_re=www.yahoo.com
+blue "Vless-reality的SNI域名默认为 www.yahoo.com"
+blue "Vmess-ws将开启TLS，Hysteria-2、Tuic-v5将使用 $(cat /root/ca.log 2>/dev/null) 证书，并开启SNI证书验证"
 tlsyn=true
-ym_vm_ws=$(cat /root/ygkkkca/ca.log 2>/dev/null)
-certificatec_vmess_ws='/root/ygkkkca/cert.crt'
-certificatep_vmess_ws='/root/ygkkkca/private.key'
-certificatec_hy2='/root/ygkkkca/cert.crt'
-certificatep_hy2='/root/ygkkkca/private.key'
-certificatec_tuic='/root/ygkkkca/cert.crt'
-certificatep_tuic='/root/ygkkkca/private.key'
+ym_vm_ws=$(cat /root/ca.log 2>/dev/null)
+certificatec_vmess_ws='/root/cert.crt'
+certificatep_vmess_ws='/root/private.key'
+certificatec_hy2='/root/cert.crt'
+certificatep_hy2='/root/private.key'
+certificatec_tuic='/root/cert.crt'
+certificatep_tuic='/root/private.key'
 }
 zqzs(){
-ym_vl_re=one-piece.com
-blue "Vless-reality的SNI域名默认为 one-piece.com"
+ym_vl_re=www.yahoo.com
+blue "Vless-reality的SNI域名默认为 www.yahoo.com"
 blue "Vmess-ws将关闭TLS，Hysteria-2、Tuic-v5将使用bing自签证书，并关闭SNI证书验证"
 tlsyn=false
 ym_vm_ws=www.bing.com
@@ -253,11 +253,11 @@ else
 red "生成bing自签证书失败" && exit
 fi
 echo
-if [[ -f /root/ygkkkca/cert.crt && -f /root/ygkkkca/private.key && -s /root/ygkkkca/cert.crt && -s /root/ygkkkca/private.key ]]; then
-yellow "经检测，之前已使用Acme-yg脚本申请过Acme域名证书：$(cat /root/ygkkkca/ca.log) "
-green "是否使用 $(cat /root/ygkkkca/ca.log) 域名证书？"
+if [[ -f /root/cert.crt && -f /root/private.key && -s /root/cert.crt && -s /root/private.key ]]; then
+yellow "经检测，之前已使用Acme-yg脚本申请过Acme域名证书：$(cat /root/ca.log) "
+green "是否使用 $(cat /root/ca.log) 域名证书？"
 yellow "1：否！使用自签的证书 (回车默认)"
-yellow "2：是！使用 $(cat /root/ygkkkca/ca.log) 域名证书"
+yellow "2：是！使用 $(cat /root/ca.log) 域名证书"
 readp "请选择：" menu
 if [ -z "$menu" ] || [ "$menu" = "1" ] ; then
 zqzs
@@ -272,8 +272,8 @@ readp "请选择：" menu
 if [ -z "$menu" ] || [ "$menu" = "1" ] ; then
 zqzs
 else
-bash <(curl -Ls wget -N --no-check-certificate https://raw.githubusercontent.com/xxf185/acme/master/acme.sh && bash acme.sh)
-if [[ ! -f /root/ygkkkca/cert.crt && ! -f /root/ygkkkca/private.key && ! -s /root/ygkkkca/cert.crt && ! -s /root/ygkkkca/private.key ]]; then
+bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
+if [[ ! -f /root/cert.crt && ! -f /root/private.key && ! -s /root/cert.crt && ! -s /root/private.key ]]; then
 red "Acme证书申请失败，继续使用自签证书" 
 zqzs
 else
@@ -692,7 +692,7 @@ hyps=$hy2_port,$hy2ports
 else
 hyps=$hy2_port
 fi
-ym=$(cat /root/ygkkkca/ca.log 2>/dev/null)
+ym=$(cat /root/ca.log 2>/dev/null)
 hy2_sniname=$(jq -r '.inbounds[2].tls.key_path' /etc/s-box/sb.json)
 if [[ "$hy2_sniname" = '/etc/s-box/private.key' ]]; then
 hy2_name=www.bing.com
@@ -708,7 +708,7 @@ ins_hy2=0
 hy2_ins=false
 fi
 tu5_port=$(jq -r '.inbounds[3].listen_port' /etc/s-box/sb.json)
-ym=$(cat /root/ygkkkca/ca.log 2>/dev/null)
+ym=$(cat /root/ca.log 2>/dev/null)
 tu5_sniname=$(jq -r '.inbounds[3].tls.key_path' /etc/s-box/sb.json)
 if [[ "$tu5_sniname" = '/etc/s-box/private.key' ]]; then
 tu5_name=www.bing.com
@@ -1589,17 +1589,17 @@ red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo
 }
 changeym(){
-[ -f /root/ygkkkca/ca.log ] && ymzs="$yellow切换为域名证书：$(cat /root/ygkkkca/ca.log 2>/dev/null)$plain" || ymzs="$yellow未申请域名证书，无法切换$plain"
+[ -f /root/ca.log ] && ymzs="$yellow切换为域名证书：$(cat /root/ca.log 2>/dev/null)$plain" || ymzs="$yellow未申请域名证书，无法切换$plain"
 vl_na="正在使用的域名证书：$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)。$yellow更换符合reality要求的域名证书，不建议使用自有解析的域名$plain"
 tls=$(jq -r '.inbounds[1].tls.enabled' /etc/s-box/sb.json)
-[[ "$tls" = "false" ]] && vm_na="当前已关闭TLS。$ymzs ${yellow}切换为开启TLS，Argo隧道将关闭，可进入主菜单选项4，将端口更改为https 443系的端口，主协议可实现CDN优选IP${plain}" || vm_na="正在使用的域名证书：$(cat /root/ygkkkca/ca.log 2>/dev/null)。$yellow切换为关闭TLS，Argo隧道将可用，可进入主菜单选项4，将端口更改为http 80系端口，主协议可实现CDN优选IP$plain"
+[[ "$tls" = "false" ]] && vm_na="当前已关闭TLS。$ymzs ${yellow}切换为开启TLS，Argo隧道将关闭，可进入主菜单选项4，将端口更改为https 443系的端口，主协议可实现CDN优选IP${plain}" || vm_na="正在使用的域名证书：$(cat /root/ca.log 2>/dev/null)。$yellow切换为关闭TLS，Argo隧道将可用，可进入主菜单选项4，将端口更改为http 80系端口，主协议可实现CDN优选IP$plain"
 hy2_sniname=$(jq -r '.inbounds[2].tls.key_path' /etc/s-box/sb.json)
-[[ "$hy2_sniname" = '/etc/s-box/private.key' ]] && hy2_na="正在使用自签bing证书。$ymzs" || hy2_na="正在使用的域名证书：$(cat /root/ygkkkca/ca.log 2>/dev/null)。$yellow切换为自签bing证书$plain"
+[[ "$hy2_sniname" = '/etc/s-box/private.key' ]] && hy2_na="正在使用自签bing证书。$ymzs" || hy2_na="正在使用的域名证书：$(cat /root/ca.log 2>/dev/null)。$yellow切换为自签bing证书$plain"
 tu5_sniname=$(jq -r '.inbounds[3].tls.key_path' /etc/s-box/sb.json)
-[[ "$tu5_sniname" = '/etc/s-box/private.key' ]] && tu5_na="正在使用自签bing证书。$ymzs" || tu5_na="正在使用的域名证书：$(cat /root/ygkkkca/ca.log 2>/dev/null)。$yellow切换为自签bing证书$plain"
+[[ "$tu5_sniname" = '/etc/s-box/private.key' ]] && tu5_na="正在使用自签bing证书。$ymzs" || tu5_na="正在使用的域名证书：$(cat /root/ca.log 2>/dev/null)。$yellow切换为自签bing证书$plain"
 green "请选择要切换证书模式的协议"
 green "1：vless-reality协议，$vl_na"
-if [[ -f /root/ygkkkca/ca.log ]]; then
+if [[ -f /root/ca.log ]]; then
 green "2：vmess-ws协议，$vm_na"
 green "3：Hysteria2协议，$hy2_na"
 green "4：Tuic5协议，$tu5_na"
@@ -1609,8 +1609,8 @@ fi
 green "0：返回上层"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
-readp "请输入vless-reality域名 (回车使用one-piece.com)：" menu
-ym_vl_re=${menu:-one-piece.com}
+readp "请输入vless-reality域名 (回车使用www.yahoo.com)：" menu
+ym_vl_re=${menu:-www.yahoo.com}
 a=$(jq -r '.inbounds[0].tls.server_name' /etc/s-box/sb.json)
 b=$(jq -r '.inbounds[0].tls.reality.handshake.server' /etc/s-box/sb.json)
 c=$(cat /etc/s-box/vl_reality.txt | cut -d'=' -f5 | cut -d'&' -f1)
@@ -1620,16 +1620,16 @@ systemctl restart sing-box
 blue "vless-reality域名已更换为$ym_vl_re"
 result_vl_vm_hy_tu && resvless && sb_client
 elif [ "$menu" = "2" ]; then
-if [ -f /root/ygkkkca/ca.log ]; then
+if [ -f /root/ca.log ]; then
 a=$(jq -r '.inbounds[1].tls.enabled' /etc/s-box/sb.json)
 [ "$a" = "true" ] && a_a=false || a_a=true
 b=$(jq -r '.inbounds[1].tls.server_name' /etc/s-box/sb.json)
-[ "$b" = "www.bing.com" ] && b_b=$(cat /root/ygkkkca/ca.log) || b_b=$(cat /root/ygkkkca/ca.log)
+[ "$b" = "www.bing.com" ] && b_b=$(cat /root/ca.log) || b_b=$(cat /root/ca.log)
 c=$(jq -r '.inbounds[1].tls.certificate_path' /etc/s-box/sb.json)
 d=$(jq -r '.inbounds[1].tls.key_path' /etc/s-box/sb.json)
 if [ "$d" = '/etc/s-box/private.key' ]; then
-c_c='/root/ygkkkca/cert.crt'
-d_d='/root/ygkkkca/private.key'
+c_c='/root/cert.crt'
+d_d='/root/private.key'
 else
 c_c='/etc/s-box/cert.pem'
 d_d='/etc/s-box/private.key'
@@ -1644,12 +1644,12 @@ else
 red "当前未申请域名证书，不可切换。主菜单选择12，执行Acme证书申请" && sleep 2 && sb
 fi
 elif [ "$menu" = "3" ]; then
-if [ -f /root/ygkkkca/ca.log ]; then
+if [ -f /root/ca.log ]; then
 c=$(jq -r '.inbounds[2].tls.certificate_path' /etc/s-box/sb.json)
 d=$(jq -r '.inbounds[2].tls.key_path' /etc/s-box/sb.json)
 if [ "$d" = '/etc/s-box/private.key' ]; then
-c_c='/root/ygkkkca/cert.crt'
-d_d='/root/ygkkkca/private.key'
+c_c='/root/cert.crt'
+d_d='/root/private.key'
 else
 c_c='/etc/s-box/cert.pem'
 d_d='/etc/s-box/private.key'
@@ -1662,12 +1662,12 @@ else
 red "当前未申请域名证书，不可切换。主菜单选择12，执行Acme证书申请" && sleep 2 && sb
 fi
 elif [ "$menu" = "4" ]; then
-if [ -f /root/ygkkkca/ca.log ]; then
+if [ -f /root/ca.log ]; then
 c=$(jq -r '.inbounds[3].tls.certificate_path' /etc/s-box/sb.json)
 d=$(jq -r '.inbounds[3].tls.key_path' /etc/s-box/sb.json)
 if [ "$d" = '/etc/s-box/private.key' ]; then
-c_c='/root/ygkkkca/cert.crt'
-d_d='/root/ygkkkca/private.key'
+c_c='/root/cert.crt'
+d_d='/root/private.key'
 else
 c_c='/etc/s-box/cert.pem'
 d_d='/etc/s-box/private.key'
@@ -2449,17 +2449,17 @@ sb
 fi
 }
 acme(){
-bash <(curl -Ls wget -N --no-check-certificate https://raw.githubusercontent.com/xxf185/acme/master/acme.sh && bash acme.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
 }
 cfwarp(){
-bash <(curl -Ls bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh))
+bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh))
 }
 bbr(){
 if [[ $vi =~ lxc|openvz ]]; then
 yellow "当前VPS的架构为 $vi，不支持开启原版BBR加速" && sleep 2 && exit 
 else
 green "点击任意键，即可开启BBR加速，ctrl+c退出"
-bash <(curl -Ls https://raw.githubusercontent.com/xxf185/bbr/main/tcp.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
 fi
 }
 showprotocol(){
@@ -2513,12 +2513,21 @@ echo -e "未设置域名分流"
 fi
 }
 clear
-white "" 
-echo -e "------------------------Sing-box四合一脚本------------------------"
-echo -e " "
-white ""
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+echo -e "${bblue} ░██     ░██      ░██ ██ ██         ░█${plain}█   ░██     ░██   ░██     ░█${red}█   ░██${plain}  "
+echo -e "${bblue}  ░██   ░██      ░██    ░░██${plain}        ░██  ░██      ░██  ░██${red}      ░██  ░██${plain}   "
+echo -e "${bblue}   ░██ ░██      ░██ ${plain}                ░██ ██        ░██ █${red}█        ░██ ██  ${plain}   "
+echo -e "${bblue}     ░██        ░${plain}██    ░██ ██       ░██ ██        ░█${red}█ ██        ░██ ██  ${plain}  "
+echo -e "${bblue}     ░██ ${plain}        ░██    ░░██        ░██ ░██       ░${red}██ ░██       ░██ ░██ ${plain}  "
+echo -e "${bblue}     ░█${plain}█          ░██ ██ ██         ░██  ░░${red}██     ░██  ░░██     ░██  ░░██ ${plain}  "
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+white "甬哥Github项目  ：github.com/yonggekkk"
+white "甬哥Blogger博客 ：ygkkk.blogspot.com"
+white "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+white "Vless-reality-vision、Vmess-ws(tls)+Argo、Hysteria-2、Tuic-v5 一键四协议共存"
 white "Sing-box脚本快捷方式：sb"
-red ""
+red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 green " 1. 安装 Sing-box" 
 green " 2. 卸载 Sing-box"
 white "----------------------------------------------------------------------------------"
@@ -2526,8 +2535,8 @@ green " 3. 变更配置 (双证书、UUID、Argo域名、IP优先级、TG通知)
 green " 4. 更改端口、添加多端口跳跃复用" 
 green " 5. 三大通道自定义域名分流" 
 green " 6. 关闭、重启 Sing-box"   
-green " 7. 更新脚本"
-green " 8. 更新Sing-box 内核"
+green " 7. 更新 Sing-box 脚本"
+green " 8. 更新、切换 Sing-box 双内核"
 white "----------------------------------------------------------------------------------"
 green " 9. 实时查询/TG通知：分享链接、二维码、Clash-Meta、官方SFA/SFI/SFW客户端配置"
 green "10. 查看 Sing-box 运行日志"
@@ -2544,6 +2553,7 @@ echo -e "当前 Sing-box 脚本最新版：${bblue}${insV}${plain} (已安装)"
 else
 echo -e "当前 Sing-box 脚本版本号：${bblue}${insV}${plain}"
 echo -e "检测到最新 Sing-box 脚本版本号：${yellow}${latestV}${plain} (可选择7进行更新)"
+echo -e "${yellow}$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version)${plain}"
 fi
 else
 echo -e "当前 Sing-box 脚本版本号：${bblue}${latestV}${plain}"
@@ -2555,25 +2565,33 @@ if [[ $inscore =~ ^[0-9.]+$ ]]; then
 if [ "${inscore}" = "${latcore}" ]; then
 echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${inscore}${plain} (已安装)"
+echo
+echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
 else
 echo
 echo -e "当前 Sing-box 已安装正式版内核：${bblue}${inscore}${plain}"
 echo -e "检测到最新 Sing-box 正式版内核：${yellow}${latcore}${plain} (可选择8进行更新)"
 echo
+echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain} (可切换)"
 fi
 else
 if [ "${inscore}" = "${precore}" ]; then
 echo
+echo -e "当前 Sing-box 最新测试版内核：${bblue}${inscore}${plain} (已安装)"
+echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
 else
 echo
-echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} "
+echo -e "当前 Sing-box 已安装测试版内核：${bblue}${inscore}${plain}"
+echo -e "检测到最新 Sing-box 测试版内核：${yellow}${precore}${plain} (可选择8进行更新)"
+echo
+echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain} (可切换)"
 fi
 fi
 else
 echo
 echo -e "当前 Sing-box 最新正式版内核：${bblue}${latcore}${plain}"
-echo -e ""
+echo -e "当前 Sing-box 最新测试版内核：${bblue}${precore}${plain}"
 fi
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo -e "VPS状态如下："
