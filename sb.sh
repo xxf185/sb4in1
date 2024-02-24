@@ -2307,7 +2307,7 @@ crontab /tmp/crontab.tmp
 rm /tmp/crontab.tmp
 }
 lnsb(){
-curl -sL -o /usr/bin/sb https://raw.githubusercontent.com/xxf185/sb4in1/main/sb.sh
+curl -sL -o /usr/bin/sb https://raw.githubusercontent.com/SagerNet/sb4in1/main/sb.sh
 chmod +x /usr/bin/sb
 }
 upsbyg(){
@@ -2315,12 +2315,12 @@ if [[ ! -f '/usr/bin/sb' ]]; then
 red "未正常安装Sing-box" && exit
 fi
 lnsb
-curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
+curl -sL https://raw.githubusercontent.com/SagerNet/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
 green "Sing-box安装脚本升级成功" && sleep 5 && sb
 }
 lapre(){
-latcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
-precore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
+latcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+precore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | sed -n 4p | tr -d ',"' | awk '{print $1}')
 inscore=$(/etc/s-box/sing-box version 2>/dev/null | awk '/version/{print $NF}')
 }
 upsbcroe(){
@@ -2330,13 +2330,13 @@ lapre
 green "1：升级Sing-box最新正式版 v$latcore  ${bblue}${lat}${plain}"
 readp "请选择：" menu
 if [ "$menu" = "1" ]; then
-upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+upcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
 else
 sb
 fi
 green "开始下载并更新Sing-box内核……请稍等"
 sbname="sing-box-$upcore-linux-$cpu"
-wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/xxf185/sing-box/releases/download/v$upcore/$sbname.tar.gz
+wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v$upcore/$sbname.tar.gz
 if [[ -f '/etc/s-box/sing-box.tar.gz' ]]; then
 tar xzf /etc/s-box/sing-box.tar.gz -C /etc/s-box
 mv /etc/s-box/$sbname/sing-box /etc/s-box
@@ -2446,17 +2446,17 @@ sb
 fi
 }
 acme(){
-bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/SagerNet/acme/master/acme.sh)
 }
 cfwarp(){
-bash <(curl -fsSL https://raw.githubusercontent.com/xxf185/warp/main/warp.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/SagerNet/warp/main/warp.sh)
 }
 bbr(){
 if [[ $vi =~ lxc|openvz ]]; then
 yellow "当前VPS的架构为 $vi，不支持开启原版BBR加速" && sleep 2 && exit 
 else
 green "点击任意键，即可开启BBR加速，ctrl+c退出"
-bash <(curl -Ls https://raw.githubusercontent.com/xxf185/bbr/main/tcp.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/SagerNet/bbr/main/tcp.sh)
 fi
 }
 showprotocol(){
@@ -2531,14 +2531,14 @@ green "13. 管理 Warp "
 green " 0. 退出脚本"
 red ""
 insV=$(cat /etc/s-box/v 2>/dev/null)
-latestV=$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
+latestV=$(curl -sL https://raw.githubusercontent.com/SagerNet/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
 if [ -f /etc/s-box/v ]; then
 if [ "$insV" = "$latestV" ]; then
 echo -e "当前 Sing-box 脚本最新版：${bblue}${insV}${plain} (已安装)"
 else
 echo -e "当前 Sing-box 脚本版本号：${bblue}${insV}${plain}"
 echo -e "检测到最新 Sing-box 脚本版本号：${yellow}${latestV}${plain} (可选择7进行更新)"
-echo -e "${yellow}$(curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version)${plain}"
+echo -e "${yellow}$(curl -sL https://raw.githubusercontent.com/SagerNet/sb4in1/main/version/version)${plain}"
 fi
 else
 echo -e "当前 Sing-box 脚本版本：${bblue}${latestV}${plain}"
