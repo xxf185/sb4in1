@@ -195,9 +195,9 @@ inssb(){
 red ""
 green "一、开始下载并安装Sing-box正式版内核……请稍等"
 echo
-sbcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/xxf185/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
+sbcore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | grep -Eo '"[0-9.]+",' | sed -n 1p | tr -d '",')
 sbname="sing-box-$sbcore-linux-$cpu"
-wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/xxf185/sing-box/releases/download/v$sbcore/$sbname.tar.gz
+wget -q -O /etc/s-box/sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v$sbcore/$sbname.tar.gz
 if [[ -f '/etc/s-box/sing-box.tar.gz' ]]; then
 tar xzf /etc/s-box/sing-box.tar.gz -C /etc/s-box
 mv /etc/s-box/$sbname/sing-box /etc/s-box
@@ -272,7 +272,7 @@ readp "请选择：" menu
 if [ -z "$menu" ] || [ "$menu" = "1" ] ; then
 zqzs
 else
-bash <(curl -Ls https://raw.githubusercontent.com/xxf185/acme/master/acme.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/SagerNet/acme/master/acme.sh)
 if [[ ! -f /root/cert.crt && ! -f /root/private.key && ! -s /root/cert.crt && ! -s /root/private.key ]]; then
 red "Acme证书申请失败，继续使用自签证书" 
 zqzs
@@ -1567,7 +1567,7 @@ case $(uname -m) in
 aarch64) cpu=arm64;;
 x86_64) cpu=amd64;;
 esac
-curl -sL -o /etc/s-box/cloudflared https://github.com/xxf185/cloudflared/releases/latest/download/cloudflared-linux-$cpu
+curl -sL -o /etc/s-box/cloudflared https://github.com/SagerNet/cloudflared/releases/latest/download/cloudflared-linux-$cpu
 chmod +x /etc/s-box/cloudflared
 /etc/s-box/cloudflared tunnel --url http://localhost:$(jq -r '.inbounds[1].listen_port' /etc/s-box/sb.json) --edge-ip-version auto --no-autoupdate --protocol http2 > /etc/s-box/argo.log 2>&1 &
 echo "$!" > /etc/s-box/sbargopid.log
@@ -1578,7 +1578,7 @@ blue "Argo隧道申请成功且验证有效，域名：$argo" && sleep 2
 else
 cfargo
 fi
-curl -sL https://raw.githubusercontent.com/xxf185/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
+curl -sL https://raw.githubusercontent.com/SagerNet/sb4in1/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1 > /etc/s-box/v
 clear
 red ""
 lnsb && blue "Sing-box安装成功，脚本快捷方式为 sb" && cronsb
